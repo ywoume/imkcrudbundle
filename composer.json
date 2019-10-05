@@ -20,8 +20,8 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "ImkCrudBundle"
+            "type": "git",
+            "url": "https://github.com/ywoume/imkcrudbundle.git"
         }
     ]
 }
