@@ -1,0 +1,27 @@
+{
+    "name": "ywoume/imkcrudbundle",
+    "keywords": ["imk-crud-bundle","imkcrud", "imkcrudbundle"],
+    "description": "Crud Process simplify bundle",
+    "authors": [
+        {
+            "name": "ywoume",
+            "email": "ywoume@imakidev.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "symfony/form": "*",
+        "doctrine/orm": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ImkCrudBundle\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "ImkCrudBundle"
+        }
+    ]
+}
