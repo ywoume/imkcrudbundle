@@ -45,6 +45,10 @@ abstract class AbstractManagerFactory
     protected $className;
 
     protected $id = null;
+    /**
+     * @var bool
+     */
+    private $state;
 
     /**
      * ServiceClassService constructor.
@@ -79,6 +83,7 @@ abstract class AbstractManagerFactory
         $this->manager->persist($data);
         $this->manager->flush();
         $this->redirect = true;
+        $this->state = true;
 
         return $this;
     }
@@ -136,8 +141,14 @@ abstract class AbstractManagerFactory
 
     /**
      * @return bool
+     * @deprecated "will be replace by state"
      */
     public function getRedirect()
+    {
+        return $this->redirect;
+    }
+
+    public function getState()
     {
         return $this->redirect;
     }
@@ -161,6 +172,7 @@ abstract class AbstractManagerFactory
             }
             $this->manager->flush();
             $this->redirect = true;
+            $this->state = true;
         }
 
         return $this->form;
