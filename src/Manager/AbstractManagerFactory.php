@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class AbstractManagerFactory
 {
-    protected $serviceRepository;
-
     private $manager;
     /**
      * @var FormBuilderInterface
@@ -33,16 +31,6 @@ abstract class AbstractManagerFactory
     private $form;
 
     /**
-     * @var FormBuilderInterface
-     */
-    private $formUpload;
-
-    /**
-     * @var FormBuilderInterface
-     */
-    private $formUploadIMGPDF;
-
-    /**
      * @var bool
      */
     private $redirect = false;
@@ -57,15 +45,19 @@ abstract class AbstractManagerFactory
     protected $className;
 
     protected $id = null;
+    /**
+     * @var bool
+     */
+    private $state;
 
     /**
      * ServiceClassService constructor.
      *
-     * @param FormFactory $formFactory
+     * @param FormFactoryInterface $formFactory
      * @param EntityManagerInterface $manager
      * @throws \Exception
      */
-    public function __construct(FormFactory $formFactory, EntityManagerInterface $manager)
+    public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $manager)
     {
         $this->formBuilder = $formFactory;
         $this->manager = $manager;
@@ -91,6 +83,7 @@ abstract class AbstractManagerFactory
         $this->manager->persist($data);
         $this->manager->flush();
         $this->redirect = true;
+        $this->state = true;
 
         return $this;
     }
@@ -148,8 +141,14 @@ abstract class AbstractManagerFactory
 
     /**
      * @return bool
+     * @deprecated "will be replace by state"
      */
     public function getRedirect()
+    {
+        return $this->redirect;
+    }
+
+    public function getState()
     {
         return $this->redirect;
     }
@@ -173,6 +172,7 @@ abstract class AbstractManagerFactory
             }
             $this->manager->flush();
             $this->redirect = true;
+            $this->state = true;
         }
 
         return $this->form;
