@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class AbstractManagerFactory
 {
-    protected $serviceRepository;
-
     private $manager;
     /**
      * @var FormBuilderInterface
@@ -31,16 +29,6 @@ abstract class AbstractManagerFactory
      * @var FormBuilderInterface
      */
     private $form;
-
-    /**
-     * @var FormBuilderInterface
-     */
-    private $formUpload;
-
-    /**
-     * @var FormBuilderInterface
-     */
-    private $formUploadIMGPDF;
 
     /**
      * @var bool
@@ -61,11 +49,11 @@ abstract class AbstractManagerFactory
     /**
      * ServiceClassService constructor.
      *
-     * @param FormFactory $formFactory
+     * @param FormFactoryInterface $formFactory
      * @param EntityManagerInterface $manager
      * @throws \Exception
      */
-    public function __construct(FormFactory $formFactory, EntityManagerInterface $manager)
+    public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $manager)
     {
         $this->formBuilder = $formFactory;
         $this->manager = $manager;
