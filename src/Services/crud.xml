@@ -5,7 +5,7 @@
         https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="ImkCrudBundle\Manager\CRUDManager" autowire="true" public="true">
-            <argument type="service" id="Symfony\Component\Form\FormFactoryInterface"/>
+            <argument type="service" id="form.factory"/>
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
         </service>
     </services>
