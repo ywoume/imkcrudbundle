@@ -4,7 +4,7 @@ composer require ywoume/imkcrudbundle
 ```
 Copy and path this in your terminal.
 # 2 - Charge in symfony
-in ```Bundle.php``` ad this line
+in ```Bundles.php``` ad this line
 ```php
 // file: config/bundle.php
 ImkCrudBundle\ImkCrudBundle::class => ['all' => true],
