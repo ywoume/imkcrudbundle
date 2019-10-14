@@ -13,11 +13,11 @@ class CRUDManager extends AbstractManagerFactory
     /**
      * CRUDManager constructor.
      *
-     * @param FormFactoryInterface $formFactory
+     * @param FormFactory $formFactory
      * @param EntityManagerInterface $manager
      * @throws \Exception
      */
-    public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $manager)
+    public function __construct(FormFactory $formFactory, EntityManagerInterface $manager)
     {
         parent::__construct($formFactory, $manager);
     }
