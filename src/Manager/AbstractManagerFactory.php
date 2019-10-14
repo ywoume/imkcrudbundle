@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Class AbstractManagerFactory.
@@ -177,6 +180,7 @@ abstract class AbstractManagerFactory
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
+
             if (!is_null($uploadDir)) {
                 $this->uploadDir = $uploadDir;
 
@@ -196,45 +200,49 @@ abstract class AbstractManagerFactory
 
     public function sniperFile()
     {
-        foreach ($this->form->getData() as $key => $item) {
-            dd($this->form['avatar']->getData());
-            if ($item instanceof UploadedFile) {
-                $newName = $this->moveFile($item);
-                dd($newName);
-                $method = 'set'.ucfirst(strtolower($key));
-                $this->form->$method($newName);
+        $formMethods = get_class_methods(get_class($this->form->getData()));
+        foreach ($formMethods as $key => $method) {
+
+            if ('get' == substr($method, 0, 3)) {
+                $methodVar = $this->form->getData()->$method();
+
+                if (!is_null($methodVar) && is_string($methodVar)) {
+
+                    if (substr(
+                            $this->form->getData()->$method(),
+                            0,
+                            5
+                        ) == '/tmp/') {
+                        $setter = str_replace('get', 'set', $method);
+                        $attribute = str_replace('get', '', $method);
+
+                        $nameFile = $this->moveFile($this->form[lcfirst($attribute)]->getData());
+
+                        $this->form->getData()->$setter($nameFile);
+                    }
+
+                }
             }
         }
     }
 
-    public function refresh($object)
-    {
-        foreach (get_class_methods(get_class($object)) as $key => $value) {
-            if (substr($value, 0, 3) == 'get') {
 
-            }
-
-        }
-
-    }
 
     private function moveFile(UploadedFile $item)
     {
+
         $originalFilename = pathinfo($item->getClientOriginalName(), PATHINFO_FILENAME);
-        // this is needed to safely include the file name as part of the URL
         $safeFilename = transliterator_transliterate(
             'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
             $originalFilename
         );
         $newFilename = $safeFilename.'-'.uniqid().'.'.$item->guessExtension();
-        dd($newName, $originalFilename);
-        // Move the file to the directory where brochures are stored
+
         try {
             $item->move(
                 $this->uploadDir,
                 $newFilename
             );
-
             return $newFilename;
         } catch (FileException $e) {
             throw new FileException($e->getCode().'-  '.$e->getMessage());
