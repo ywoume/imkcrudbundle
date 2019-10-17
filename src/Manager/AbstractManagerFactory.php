@@ -207,12 +207,7 @@ abstract class AbstractManagerFactory
                 $methodVar = $this->form->getData()->$method();
 
                 if (!is_null($methodVar) && is_string($methodVar)) {
-
-                    if (substr(
-                            $this->form->getData()->$method(),
-                            0,
-                            5
-                        ) == '/tmp/') {
+                    if (preg_match('/tmp/', $this->form->getData()->$method(), $var)) {
                         $setter = str_replace('get', 'set', $method);
                         $attribute = str_replace('get', '', $method);
 
