@@ -2,13 +2,13 @@
 
 namespace ImkCrudBundle\DependencyInjection;
 
-use Sensio\Bundle\FrameworkExtraBundle\DependencyInjection\Configuration;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * Class ImkCrudConfiguration.
  */
-class ImkCrudConfiguration extends Configuration
+class ImkCrudConfiguration extends ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
