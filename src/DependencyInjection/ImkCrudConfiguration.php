@@ -8,7 +8,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 /**
  * Class ImkCrudConfiguration.
  */
-class ImkCrudConfiguration extends ConfigurationInterface
+class ImkCrudConfiguration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
